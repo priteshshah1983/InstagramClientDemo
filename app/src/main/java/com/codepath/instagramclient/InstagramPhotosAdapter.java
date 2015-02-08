@@ -2,6 +2,7 @@ package com.codepath.instagramclient;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         TextView caption;
         ImageView profilePhoto;
         ImageView photo;
+        TextView timestamp;
     }
 
     public InstagramPhotosAdapter(Context context, List<InstagramPhoto> objects) {
@@ -42,6 +44,7 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
             viewHolder.caption = (TextView) convertView.findViewById(R.id.tvCaption);
             viewHolder.profilePhoto = (ImageView) convertView.findViewById(R.id.ivProfilePhoto);
             viewHolder.photo = (ImageView) convertView.findViewById(R.id.ivPhoto);
+            viewHolder.timestamp = (TextView) convertView.findViewById(R.id.tvTimestamp);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -50,8 +53,13 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         // Populate the data into the template view using the data object
         viewHolder.username.setText(photo.getUsername());
         viewHolder.caption.setText(photo.getCaption());
-        viewHolder.profilePhoto.setImageResource(0);
-        viewHolder.photo.setImageResource(0);
+//        viewHolder.profilePhoto.setImageResource(0);
+//        viewHolder.photo.setImageResource(0);
+
+        String dateString = (String) DateUtils.getRelativeTimeSpanString(photo.getCreatedTime() * 1000, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+        dateString = formatDateString(dateString);
+        viewHolder.timestamp.setText(dateString);
+
         Transformation transformation = new RoundedTransformationBuilder()
                 .borderColor(Color.BLACK)
                 .borderWidthDp(0)
@@ -72,5 +80,18 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
                 .into(viewHolder.photo);
         // Return the completed view to render on screen
         return convertView;
+    }
+
+    // Dirty hack! How do we deal with locales?
+    private String formatDateString(String dateString) {
+        dateString = dateString.replace(" ago", "");
+        dateString = dateString.replace(" seconds", "s");
+        dateString = dateString.replace(" second", "s");
+        dateString = dateString.replace(" minutes", "m");
+        dateString = dateString.replace(" minute", "m");
+        dateString = dateString.replace(" hours", "h");
+        dateString = dateString.replace(" hour", "h");
+
+        return dateString;
     }
 }

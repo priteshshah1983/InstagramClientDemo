@@ -13,6 +13,7 @@ public class InstagramPhoto {
     private String imageUrl;
     private int imageHeight;
     private int likesCount;
+    private long createdTime;
 
     public String getUsername() {
         return username;
@@ -64,6 +65,7 @@ public class InstagramPhoto {
         JSONObject caption = photoJSON.optJSONObject("caption");
         if (caption != null) {
             photo.setCaption(caption.optString("text"));
+            photo.setCreatedTime(Long.parseLong(caption.optString("created_time")));
         }
         JSONObject images = photoJSON.optJSONObject("images");
         if (images != null) {
@@ -107,5 +109,13 @@ public class InstagramPhoto {
 
     public void setProfilePhotoUrl(String profilePhotoUrl) {
         this.profilePhotoUrl = profilePhotoUrl;
+    }
+
+    public long getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(long createdTime) {
+        this.createdTime = createdTime;
     }
 }
