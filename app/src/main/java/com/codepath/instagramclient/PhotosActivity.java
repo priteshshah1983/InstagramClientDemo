@@ -1,15 +1,12 @@
 package com.codepath.instagramclient;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -38,30 +35,15 @@ public class PhotosActivity extends ActionBarActivity {
 
     private void fetchPopularPhotos() {
 
+        mPhotos.clear();
+
         InstagramRestClient.get("media/popular", null, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                JSONArray photosJSON = null;
                 try {
-                    photosJSON = response.getJSONArray("data");
-
-                    for (int i = 0; i < photosJSON.length(); i++) {
-                        JSONObject photoJSON = photosJSON.getJSONObject(i);
-                        InstagramPhoto photo = new InstagramPhoto();
-                        JSONObject user = photoJSON.getJSONObject("user");
-                        if (user != null) {
-                            photo.setUsername(user.getString("username"));
-                        }
-                        JSONObject caption = photoJSON.getJSONObject("caption");
-                        if (caption != null) {
-                            photo.setCaption(caption.getString("text"));
-                        }
-                        photo.setImageUrl(photoJSON.getJSONObject("images").getJSONObject("standard_resolution").getString("url"));
-                        photo.setImageHeight(photoJSON.getJSONObject("images").getJSONObject("standard_resolution").getInt("height"));
-                        photo.setLikesCount(photoJSON.getJSONObject("likes").getInt("count"));
-                        mPhotos.add(photo);
-                    }
+                    JSONArray photosJSON = response.getJSONArray("data");
+                    mPhotos.addAll(InstagramPhoto.fromJson(photosJSON));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

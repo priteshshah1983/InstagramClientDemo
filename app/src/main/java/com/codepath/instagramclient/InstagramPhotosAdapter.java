@@ -12,9 +12,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by pshah on 2/7/15.
- */
 public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
 
     public InstagramPhotosAdapter(Context context, List<InstagramPhoto> objects) {
