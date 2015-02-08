@@ -58,8 +58,18 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
                 .cornerRadiusDp(30)
                 .oval(false)
                 .build();
-        Picasso.with(getContext()).load(photo.getProfilePhotoUrl()).transform(transformation).into(viewHolder.profilePhoto);
-        Picasso.with(getContext()).load(photo.getImageUrl()).into(viewHolder.photo);
+
+        Picasso.with(getContext())
+                .load(photo.getProfilePhotoUrl())
+                .placeholder(R.drawable.default_avatar)
+                .transform(transformation)
+                .into(viewHolder.profilePhoto);
+
+        Picasso.with(getContext())
+                .load(photo.getImageUrl())
+                .placeholder(R.drawable.default_placeholder)
+                .fit()
+                .into(viewHolder.photo);
         // Return the completed view to render on screen
         return convertView;
     }
