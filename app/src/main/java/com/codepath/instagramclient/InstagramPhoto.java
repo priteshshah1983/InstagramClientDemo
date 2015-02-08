@@ -9,6 +9,7 @@ public class InstagramPhoto {
 
     private String username;
     private String caption;
+    private String profilePhotoUrl;
     private String imageUrl;
     private int imageHeight;
     private int likesCount;
@@ -58,6 +59,7 @@ public class InstagramPhoto {
         JSONObject user = photoJSON.optJSONObject("user");
         if (user != null) {
             photo.setUsername(user.optString("username"));
+            photo.setProfilePhotoUrl(user.optString("profile_picture"));
         }
         JSONObject caption = photoJSON.optJSONObject("caption");
         if (caption != null) {
@@ -97,5 +99,13 @@ public class InstagramPhoto {
         }
 
         return photos;
+    }
+
+    public String getProfilePhotoUrl() {
+        return profilePhotoUrl;
+    }
+
+    public void setProfilePhotoUrl(String profilePhotoUrl) {
+        this.profilePhotoUrl = profilePhotoUrl;
     }
 }
