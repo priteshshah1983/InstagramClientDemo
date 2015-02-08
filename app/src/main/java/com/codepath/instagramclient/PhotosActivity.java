@@ -1,6 +1,7 @@
 package com.codepath.instagramclient;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,11 +21,31 @@ public class PhotosActivity extends ActionBarActivity {
 
     private ArrayList<InstagramPhoto> mPhotos;
     private InstagramPhotosAdapter mPhotosAdapter;
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
+
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                fetchPopularPhotos();
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+
         mPhotos = new ArrayList<>();
         mPhotosAdapter = new InstagramPhotosAdapter(this, mPhotos);
         ListView lvPhotos = (ListView) findViewById(R.id.lvPhotos);
@@ -44,6 +65,10 @@ public class PhotosActivity extends ActionBarActivity {
                 try {
                     JSONArray photosJSON = response.getJSONArray("data");
                     mPhotos.addAll(InstagramPhoto.fromJson(photosJSON));
+
+                    // Now we call setRefreshing(false) to signal refresh has finished
+                    swipeContainer.setRefreshing(false);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
