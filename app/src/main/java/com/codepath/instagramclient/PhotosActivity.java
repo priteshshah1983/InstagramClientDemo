@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 public class PhotosActivity extends ActionBarActivity {
 
-    private static final String CLIENT_ID = "ecacb90fa9fc4928a7b10181e4ec0184";
     private ArrayList<InstagramPhoto> mPhotos;
     private InstagramPhotosAdapter mPhotosAdapter;
 
@@ -39,9 +38,7 @@ public class PhotosActivity extends ActionBarActivity {
 
     private void fetchPopularPhotos() {
 
-        String url = "https://api.instagram.com/v1/media/popular?client_id=" + CLIENT_ID;
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(url, new JsonHttpResponseHandler() {
+        InstagramRestClient.get("media/popular", null, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
