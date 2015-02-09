@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="likes">
+        <item quantity="one">%d like</item>
+        <item quantity="other">%d likes</item>
+    </plurals>
+    <plurals name="comments">
+        <item quantity="one">view %d comment</item>
+        <item quantity="other">view all %d comments</item>
+    </plurals>
+</resources>

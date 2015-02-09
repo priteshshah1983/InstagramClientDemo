@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InstagramPhoto {
 
@@ -14,6 +15,10 @@ public class InstagramPhoto {
     private int imageHeight;
     private int likesCount;
     private long createdTime;
+
+    private List<InstagramComment> comments;
+    // Do we need this?
+    private int commentsCount;
 
     public String getUsername() {
         return username;
@@ -67,6 +72,12 @@ public class InstagramPhoto {
             photo.setCaption(caption.optString("text"));
             photo.setCreatedTime(Long.parseLong(caption.optString("created_time")));
         }
+        JSONObject comments = photoJSON.optJSONObject("comments");
+        if (comments != null) {
+            photo.setCommentsCount(comments.optInt("count"));
+            JSONArray commentsData = comments.optJSONArray("data");
+            photo.setComments(InstagramComment.fromJson(commentsData));
+        }
         JSONObject images = photoJSON.optJSONObject("images");
         if (images != null) {
             JSONObject standardResolution = images.optJSONObject("standard_resolution");
@@ -84,7 +95,7 @@ public class InstagramPhoto {
     }
 
     public static ArrayList<InstagramPhoto> fromJson(JSONArray jsonArray) {
-        ArrayList<InstagramPhoto> photos = new ArrayList<InstagramPhoto>(jsonArray.length());
+        ArrayList<InstagramPhoto> photos = new ArrayList<>(jsonArray.length());
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject photoJSON = null;
             try {
@@ -117,5 +128,21 @@ public class InstagramPhoto {
 
     public void setCreatedTime(long createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public List<InstagramComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<InstagramComment> comments) {
+        this.comments = comments;
+    }
+
+    public int getCommentsCount() {
+        return commentsCount;
+    }
+
+    public void setCommentsCount(int commentsCount) {
+        this.commentsCount = commentsCount;
     }
 }
