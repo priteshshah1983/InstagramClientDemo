@@ -46,19 +46,12 @@
         android:gravity="center"
         android:textSize="20sp"
         android:paddingLeft="5dp"
-        android:paddingRight="10dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/clock_face_symbol"
-        android:id="@+id/tvClockFace"
-        android:layout_alignTop="@id/ivProfilePhoto"
-        android:layout_alignBottom="@id/ivProfilePhoto"
-        android:layout_toLeftOf="@id/tvTimestamp"
-        android:layout_toStartOf="@id/tvTimestamp"
-        android:gravity="center"
-        android:textSize="20sp"/>
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
+        android:drawableLeft="@drawable/time"
+        android:drawableStart="@drawable/time"
+        android:drawablePadding="5dp"
+        android:textColor="@color/light_gray_color"/>
 
     <ImageView
         android:layout_width="match_parent"
@@ -73,30 +66,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/heart_symbol"
-        android:id="@+id/tvHeart"
-        android:layout_below="@id/ivPhoto"
-        android:textSize="20sp"
-        android:textColor="@color/dark_blue_color"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:gravity="center"
         tools:text="16,258 likes"
         android:id="@+id/tvLikes"
-        android:layout_toRightOf="@id/tvHeart"
-        android:layout_alignTop="@id/tvHeart"
-        android:layout_alignBottom="@id/tvHeart"
-        android:gravity="center"
-        android:layout_toEndOf="@id/tvHeart"
+        android:layout_below="@id/ivPhoto"
         android:textSize="17sp"
-        android:textColor="@color/dark_blue_color"/>
+        android:textColor="@color/dark_blue_color"
+        android:drawableLeft="@drawable/likes"
+        android:drawableStart="@drawable/likes"
+        android:drawablePadding="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
 
     <TextView
         android:layout_marginLeft="10dp"
